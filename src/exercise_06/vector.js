@@ -12,5 +12,40 @@ export default class Vector {
   // * Please do NOT modify the signature of the class. Please put all your code in the Vector
   // class.
 
-  // PLEASE DELETE THIS LINE AND ADD YOUR IMPLEMENTATION HERE
+
+  constructor(x, y) {
+    this._x = x;
+    this._y = y;
+  }
+
+  get x() {
+    return this._x;
+  }
+
+  get y() {
+    return this._y;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set x(a) {
+    throw new Error('You should not set x and y of the vector');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set y(b) {
+    throw new Error('You should not set x and y of the vector');
+  }
+
+
+  static plus(vector1, vector2) {
+    return new Vector(vector1._x + vector2._x, vector1._y + vector2._y);
+  }
+
+  static minus(vector1, vector2) {
+    return new Vector(vector1._x - vector2._x, vector1._y - vector2._y);
+  }
+
+  distance() {
+    return Math.sqrt(this._x * this._x + this._y * this._y);
+  }
 }

@@ -9,5 +9,19 @@ export default function waitForAll(...promises) {
   // * Please implement this function and pass all the tests in wait_for_all_spec.js.
   // * Please do NOT modify the signature of the function.
 
-  throw new Error('Please delete this line and implement the function');
+  [...promises].forEach((object) => {
+    if (Promise.resolve(object) !== object) {
+      throw new Error('Not all elements are promises.');
+    }
+  });
+
+  Promise.allSettled([...promises]).then((results) => {
+    // eslint-disable-next-line consistent-return
+    results.forEach((result) => {
+      if (result.status === 'rejected') {
+        return Promise.reject();
+      }
+    });
+    return Promise.resolve();
+  });
 }
