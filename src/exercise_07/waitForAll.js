@@ -15,13 +15,16 @@ export default function waitForAll(...promises) {
     }
   });
 
-  Promise.allSettled([...promises]).then((results) => {
-    // eslint-disable-next-line consistent-return
-    results.forEach((result) => {
-      if (result.status === 'rejected') {
-        return Promise.reject();
-      }
+  return new Promise((resolve, reject) => {
+    let count = 0;
+    promises.forEach((promise, index) => {
+      promise.then(() => {
+        if (index == promises.length - 1 && count == 0) {
+          resolve();
+        } else if (index == promises.length - 1 && count > 0) {
+          reject();
+        }
+      }).catch(() => { count += 1; });
     });
-    return Promise.resolve();
   });
 }
